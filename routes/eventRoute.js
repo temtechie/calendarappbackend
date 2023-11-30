@@ -9,6 +9,7 @@ router.post('/create', authenticateToken, eventController.createEvent);
 
 // Read all events for the authenticated user
 router.get('/all', authenticateToken, eventController.getAllEvents);
+router.get('/events', authenticateToken, eventController.getEventsByStart);
 
 // Read a single event
 router.get('/:id', authenticateToken, eventController.getEvent);

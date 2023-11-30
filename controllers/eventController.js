@@ -61,6 +61,18 @@ const getEvent = async (req, res) => {
     }
 };
 
+const getEventsByStart = async (req, res) => {
+    try {
+        const { start } = req.query;
+        const events = await Event.find({ userId: req.user._id, start });
+        return res.status(200).json(events);
+    } catch (error) {
+        console.error('Error fetching events by start:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
 const editEvent = async (req, res) => {
     try {
         const eventId = req.params.id;
@@ -102,4 +114,4 @@ const deleteEvent = async (req, res) => {
     }
 };
 
-module.exports = { createEvent, getAllEvents, getEvent, editEvent, deleteEvent };
+module.exports = { createEvent, getAllEvents, getEvent, editEvent, deleteEvent, getEventsByStart };
