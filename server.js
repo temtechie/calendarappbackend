@@ -17,6 +17,9 @@ app.use(cors());
 
 // User routes
 app.use('/user', userRoutes);
+app.use('/', (req, res) => {
+    return res.status(200).json({ message: 'Calendar app API running on port 3000' })
+})
 
 // Event routes (protected by authentication middleware)
 app.use('/event', eventRoutes);
