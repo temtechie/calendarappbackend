@@ -9,8 +9,6 @@ const authenticateToken = (req, res, next) => {
 
     const token = authHeader.substring(7);
 
-    console.log("token", token);
-
     jwt.verify(token, 'your-secret-key', (err, user) => {
         if (err) {
             console.log("err", err);

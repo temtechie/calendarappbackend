@@ -1,10 +1,12 @@
 const Event = require('../models/eventModel');
 
 const createEvent = async (req, res) => {
-    const { title, start, end } = req.body;
+    const { title, start, end, description } = req.body;
+
+    console.log("req.body", req.body);
 
     if (!title || !start || !end) {
-        return res.status(400).json({ message: 'Bad request' });
+        return res.status(400).json({ message: 'Bad request provide payload' });
     }
     try {
         // Create a new event with the user ID
@@ -13,10 +15,9 @@ const createEvent = async (req, res) => {
             start,
             end,
             description,
-            userId: req.user._id, // Assuming you have the user information in the request after authentication
+            userId: req.user._id,
         });
 
-        // Save the event to the database
         await event.save();
 
         return res.status(201).json({ message: 'Event created successfully', data: event });
