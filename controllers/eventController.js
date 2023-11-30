@@ -1,17 +1,17 @@
 const Event = require('../models/eventModel');
 
 const createEvent = async (req, res) => {
-    const { title, date, time, description } = req.body;
+    const { title, start, end } = req.body;
 
-    if (!title || !date || !time) {
+    if (!title || !start || !end) {
         return res.status(400).json({ message: 'Bad request' });
     }
     try {
         // Create a new event with the user ID
         const event = new Event({
             title,
-            date,
-            time,
+            start,
+            end,
             description,
             userId: req.user._id, // Assuming you have the user information in the request after authentication
         });
@@ -63,12 +63,12 @@ const getEvent = async (req, res) => {
 const editEvent = async (req, res) => {
     try {
         const eventId = req.params.id;
-        const { title, date, time, description } = req.body;
+        const { title, start, end, description } = req.body;
 
         // Update the event for the authenticated user
         const updatedEvent = await Event.findOneAndUpdate(
             { _id: eventId, userId: req.user._id },
-            { title, date, time, description },
+            { title, start, end, description },
             { new: true } // Return the updated document
         );
 
