@@ -27,13 +27,17 @@ const createEvent = async (req, res) => {
 };
 
 const getAllEvents = async (req, res) => {
+
+    if (!req.user._id) {
+        return res.status(400).json({ error: 'No User found!' });
+    }
     try {
         // Fetch all events for the authenticated user
         const events = await Event.find({ userId: req.user._id });
 
         return res.status(200).json(events);
     } catch (error) {
-        console.error('Error fetching events:', error.message);
+        console.error('Error fetching events:', error);
         return res.status(500).json({ error: 'Internal server error' });
     }
 };

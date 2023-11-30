@@ -8,15 +8,15 @@ const router = express.Router();
 router.post('/create', authenticateToken, eventController.createEvent);
 
 // Read all events for the authenticated user
-router.get('/all', eventController.getAllEvents);
+router.get('/all', authenticateToken, eventController.getAllEvents);
 
 // Read a single event
-router.get('/:id', eventController.getEvent);
+router.get('/:id', authenticateToken, eventController.getEvent);
 
 // Edit an event
-router.put('/:id', eventController.editEvent);
+router.put('/:id', authenticateToken, eventController.editEvent);
 
 // Delete an event
-router.delete('/:id', eventController.deleteEvent);
+router.delete('/:id', authenticateToken, eventController.deleteEvent);
 
 module.exports = router;
