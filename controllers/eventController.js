@@ -64,7 +64,14 @@ const getEvent = async (req, res) => {
 const getEventsByStart = async (req, res) => {
     try {
         const { start } = req.query;
-        const events = await Event.find({ userId: req.user._id, start });
+
+        const startDate = new Date(start);
+        const endDate = new Date(`${start}T23:59:59.999Z`);
+        const events = await Event.find({
+            userId: req.user._id,
+            start: { $gte: startDate, $lt: endDate }
+        });
+
         return res.status(200).json(events);
     } catch (error) {
         console.error('Error fetching events by start:', error);
